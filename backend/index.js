@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: false }));
 const PORT = process.env.PORT || 8000;
 
 app.use(cors({
-    origin: "https://easystock-app.netlify.app"
+    origin: "http://localhost:5173"
 }))
 
 app.use("/produto", productRoute); // Rota padrão de produto
