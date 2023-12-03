@@ -11,6 +11,8 @@ const searchByName = (nome) => Product.find({
 
 const findByPdvService = (pdv) => Product.findOne({ codigoPDV: pdv });
 
+const findByIdService = (id) => Product.findById(id);
+
 const updateService = (
     codigoPDV,
     nome,
@@ -25,6 +27,15 @@ const updateService = (
     { nome, precoCusto, precoVenda, qtdEstoque, qtdEstoqueMin, medida, statusVenda }
 )
 
+const updateAfterOrder = (
+    id,
+    qtdEstoque,
+    statusVenda
+) => Product.findOneAndUpdate(
+    { _id: id },
+    { qtdEstoque, statusVenda }
+)
+
 const deleteService = (pdv) => Product.findOneAndDelete({ codigoPDV: pdv });
 
 export default {
@@ -32,6 +43,8 @@ export default {
     findAllService,
     searchByName,
     findByPdvService,
+    findByIdService,
     updateService,
+    updateAfterOrder,
     deleteService
 }

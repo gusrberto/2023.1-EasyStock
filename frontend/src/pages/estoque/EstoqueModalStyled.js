@@ -14,6 +14,8 @@ export const TodoModal = styled.section`
         padding: 30px;
         border-radius: 4%;
         box-shadow: 3px 3px 1px 0px #00000080;
+        display: flex;
+        flex-direction: column;
     }
     h1 {
         text-align: center;
@@ -40,19 +42,29 @@ export const TodoModal = styled.section`
         padding-top: 1px;
         margin-top: 1%;
         margin-bottom: 5%;
+        text-align: center;
     }
-    
-    .label-float input{
+    .separar-h3 {
+        display: flex;
+        justify-content: space-between;
+        background-color: #f4f4ed;
+    }
+    .label-float input,
+    select,
+    h3 {
         border: none;
         background-color: transparent;
         text-align: center;
         font-size: 18px;
+        width: 100%;
+        border-radius: 20px;
     }
-    
-    .label-float label, select{
+
+    .label-float label,
+    select {
         border: none;
         background-color: transparent;
-        color: #758184 ;
+        color: #758184;
     }
 
     input [type="number"]::-webkit-inner-spin-button,
@@ -60,28 +72,77 @@ export const TodoModal = styled.section`
         -webkit-appearance: none;
         margin: 0;
     }
-    .display-botoes{
-        display: inline;
-        justify-content: space-between;
-        background-color: #F4F4ED;
 
-    }
-    .button-modalc, .buttons {
+    .button-modalc,
+    .buttons {
         bottom: 90px;
         border-color: #272262;
         color: #444449;
-        padding: 2px;
+        padding: 8px;
+        width: 100px;
         font-size: 16px;
         margin-top: 0;
         border-radius: 20px;
         cursor: pointer;
         transition: all 0.1s ease-out;
-        background-color: #6BA9B6;
-        
+        background-color: #6ba9b6;
     }
-    
-    .button-modalc:hover, .buttons:hover {
+
+    .button-modalc:hover,
+    .buttons:hover {
         background-color: #1e5c74;
         font-weight: bolder;
+    }
+    .separar-botoes {
+        display: flex;
+        justify-content: space-around;
+    }
+    .separar-botoes button {
+        //bottom: 90px;
+        border-color: #272262;
+        color: #444449;
+        padding: 1px;
+        width: 60px;
+        font-size: 16px;
+        margin-top: 0;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.1s ease-out;
+        background-color: #6ba9b6;
+    }
+    .separar-botoes button:hover {
+        background-color: #1e5c74;
+        font-weight: bolder;
+    }
+
+    .alinhar {
+        background-color: white;
+        display: flex;
+        justify-content: space-between;
+    }
+    .alinharVenda {
+        display: flex;
+        justify-content: end;
+    }
+
+    .infoVenda {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        width: 94%;
+    }
+    .infoVenda h3 {
+        text-align: start;
+        background-color: #77c3d5;
+        padding: 6px;
+        margin: 10px;
+        white-space: pre-wrap;
+    }
+    .data-contrato{
+        color: #6B7877;
+    }
+    .produtos-container {
+        max-height: 230px;
+        overflow-y: auto;
     }
 `;

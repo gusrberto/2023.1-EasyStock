@@ -1,14 +1,14 @@
 import { Card } from "../../Card/Card";
 import { NavBar } from "../../components/navBar/NavBar";
 import { products } from "../../Datas";
-import { Tabela } from "../estoque/EstoqueStyled";
+import { Tabela, Botao, Div } from "../estoque/EstoqueStyled";
 import EstoqueModal from "../estoque/EstoqueModal";
 import { useState } from "react";
 import { getAllPosts, searchProduct } from "../../services/postsServices";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ProdutoModal from "../estoque/ProdutoModal";
-import { sessionStatus } from "../../contexts/AuthContext";
+import { sessionStatusAdmin } from "../../contexts/AuthContext";
 import { PesquisaCaixa } from "../caixa/CaixaStyled";
 
 export default function Estoque() {
@@ -24,9 +24,8 @@ export default function Estoque() {
     }
 
     useEffect(() => {
-        sessionStatus(navigate);
-
-        findAllPosts();
+        sessionStatusAdmin(navigate)
+        .then(() => findAllPosts());
     }, []);
 
     const handleProductSelect = (product) => {
@@ -38,7 +37,7 @@ export default function Estoque() {
         <>
             <NavBar />
 
-            <PesquisaCaixa>
+            {/* <PesquisaCaixa>
                 <form>
                     <div>
                         <i className="bi bi-search"></i>
@@ -51,53 +50,59 @@ export default function Estoque() {
                             id="pesquisar"
                             className="buttons"
                             value={"Pesquisar"}
-                            required
                         />
                     </div>
                 </form>
-            </PesquisaCaixa>
+            </PesquisaCaixa> */}
+            <Div>
+                <Tabela>
+                    <table>
+                        <caption>
+                            <h3>Estoque de Produtos</h3>
+                        </caption>
+                        <thead>
+                            <tr>
+                                <th className="primeiroTH">CódigoPDV</th>
+                                <th>Nome</th>
+                                <th>Preço Custo</th>
+                                <th>Preço venda</th>
+                                <th>Qtd Estoque</th>
+                                <th>Qtd Min Estoque</th>
+                                <th>Medida</th>
+                                <th className="ultimoTH">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {products.map((product) => (
+                                <Card
+                                    key={product.codigoPDV}
+                                    product={product}
+                                    onSelect={handleProductSelect}
+                                />
+                            ))}
+                        </tbody>
+                    </table>
 
-            <Tabela>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Nome</th>
-                            <th>Preço Custo</th>
-                            <th>Preço venda</th>
-                            <th>Qtd Estoque</th>
-                            <th>Qtd Min</th>
-                            <th>Medida</th>
-                            <th>CódigoPDV</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {products.map((product) => (
-                            <Card
-                                key={product.codigoPDV}
-                                product={product}
-                                onSelect={handleProductSelect}
-                            />
-                        ))}
-                    </tbody>
-                </table>
 
-                <button
-                    className="botao-principal"
-                    onClick={() => setOpenEstoqueModal(true)}
-                >
-                    Adicionar Produtos
-                </button>
-                <EstoqueModal
-                    isOpen={openEstoqueModal}
-                    onClose={() => setOpenEstoqueModal(false)}
-                />
-                <ProdutoModal
-                    isOpen={openProdutoModal}
-                    onClose={() => setOpenProdutoModal(false)}
-                    selectedProduct={selectedProduct}
-                />
-            </Tabela>
+                    <EstoqueModal
+                        isOpen={openEstoqueModal}
+                        onClose={() => setOpenEstoqueModal(false)}
+                    />
+                    <ProdutoModal
+                        isOpen={openProdutoModal}
+                        onClose={() => setOpenProdutoModal(false)}
+                        selectedProduct={selectedProduct}
+                    />
+                </Tabela>
+                <Botao>
+                    <button
+                        className="botao-principal"
+                        onClick={() => setOpenEstoqueModal(true)}
+                    >
+                        Adicionar Produtos
+                    </button>
+                </Botao>
+            </Div>
         </>
     );
 }

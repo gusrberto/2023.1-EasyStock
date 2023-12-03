@@ -7,7 +7,7 @@ const ProductSchema = new mongoose.Schema({
     },
     precoCusto: {
         type: Number,
-        required: true
+        required: true,
     },
     precoVenda: {
         type: Number,
@@ -28,7 +28,7 @@ const ProductSchema = new mongoose.Schema({
     },
     medida: {
         type: String,
-        enum: ['KG', 'UN'],
+        enum: ['KG', 'UN', 'L', 'mL', 'G'],
         required: true
     },
     statusVenda: {
