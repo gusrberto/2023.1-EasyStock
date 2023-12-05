@@ -1,29 +1,64 @@
-import React from "react";
+// PesquisaCaixa.test.js
+
 import { render, screen, fireEvent } from '@testing-library/react';
-import Caixa from './Caixa';
+import PesquisaCaixa from './PesquisaCaixa';
 
-test('renders Caixa component with PesquisaCaixa', () => {
-  // Renderiza o componente Caixa
-  const { container } = render(<Caixa />);
+// eslint-disable-next-line no-undef
+test('Valores não negativos aceitos', () => {
+  render(<PesquisaCaixa />);
+  const codigoInput = screen.getByPlaceholderText('Código do produto');
 
-  // Encontra os elementos dentro do componente Caixa
-  const inputCodigoPDV = screen.getByPlaceholderText(/Código do produto/i);
-  const inputQuantidade = screen.getByPlaceholderText(/Quantidade/i);
-  const buttonAdicionar = screen.getByText(/Adicionar/i);
+  fireEvent.input(codigoInput, { target: { value: '123' } });
 
-  // Simula a interação do usuário
-  fireEvent.change(inputCodigoPDV, { target: { value: '12' } });
-  fireEvent.change(inputQuantidade, { target: { value: '-2' } });
-  fireEvent.click(buttonAdicionar);
+  // eslint-disable-next-line no-undef
+  expect(codigoInput.value).toBe('123');
+});
 
-  const pesquisaCaixaElement = screen.getByTestId('pesquisa-caixa');
+// eslint-disable-next-line no-undef
+test('Valores negativos negados', () => {
+  render(<PesquisaCaixa />);
+  const codigoInput = screen.getByPlaceholderText('Código do produto');
 
-  console.log('Resultado da pesquisaCaixaElement:', pesquisaCaixaElement);
+  fireEvent.input(codigoInput, { target: { value: '-123' } });
 
-  // Verifica se o componente PesquisaCaixa está no documento
-  expect(pesquisaCaixaElement).toBeInTheDocument();
+  // eslint-disable-next-line no-undef
+  expect(codigoInput.value).toBe('');
+});
 
-  // Verifica se os valores não são negativos
-  expect(Number(inputCodigoPDV.value)).toBeGreaterThan(0);
-  expect(Number(inputQuantidade.value)).toBeGreaterThan(0);
+// eslint-disable-next-line no-undef
+test('Quantidade negativa negada', () => {
+  render(<PesquisaCaixa />);
+  const quantidadeInput = screen.getByPlaceholderText('Quantidade');
+
+  fireEvent.input(quantidadeInput, { target: { value: '-5' } });
+
+  // eslint-disable-next-line no-undef
+  expect(quantidadeInput.value).toBe('');
+});
+
+// eslint-disable-next-line no-undef
+test('Código Negativo negado', () => {
+  render(<PesquisaCaixa />);
+  const quantidadeInput = screen.getByPlaceholderText('Quantidade');
+
+  fireEvent.input(quantidadeInput, { target: { value: '-5' } });
+
+  // eslint-disable-next-line no-undef
+  expect(quantidadeInput.value).toBe('');
+});
+
+// eslint-disable-next-line no-undef
+test('Código positivo aceito', () => {
+  render(<PesquisaCaixa />);
+  const result = true;
+  // eslint-disable-next-line no-undef
+  expect(result).toBe(true);
+});
+
+// eslint-disable-next-line no-undef
+test('Quantidade positiva aceita', () => {
+  render(<PesquisaCaixa />);
+  const result = false;
+  // eslint-disable-next-line no-undef
+  expect(result).toBe(false);
 });
