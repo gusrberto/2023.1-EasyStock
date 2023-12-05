@@ -101,12 +101,12 @@ export default function Caixa() {
 
     const removeCarrinho = (caixa, produtos, ccaixa) => {
         const index = produtos.findIndex((produto) => produto.produto === ccaixa._id);
-    
+
         if (index !== -1) {
             caixa.splice(index, 1);
             produtos.splice(index, 1);
             cont--;
-    
+
             caixa = [...caixa];
             produtos = [...produtos];
         }
@@ -138,7 +138,21 @@ export default function Caixa() {
                             type="number"
                             placeholder="Código do produto"
                             required
-                            onChange={(e) => setCodigoPDV(e.target.value)}
+                            onInput={(e) => {
+                                const codigoPDV = parseInt(e.target.value, 10);
+                                // Verifique se é um número positivo antes de atualizar o estado
+                                if (!isNaN(codigoPDV) && codigoPDV > 0) {
+                                    setCodigoPDV(codigoPDV);
+                                } else {
+                                    e.target.value = ''; // Limpa o campo se o valor não for válido
+                                }
+                            }}
+                            onKeyDown={(e) => {
+                                // Impedir a entrada de caracteres que criam números negativos
+                                if (e.key === '-' || e.key === 'e' || e.key === '.') {
+                                    e.preventDefault();
+                                }
+                            }}
                         />
                     </div>
                     <div>
@@ -148,7 +162,21 @@ export default function Caixa() {
                             id="qtd"
                             placeholder="Quantidade"
                             required
-                            onChange={(e) => setQuantidade(e.target.value)}
+                            onInput={(e) => {
+                                const quantidade = parseInt(e.target.value, 10);
+                                // Verifique se é um número positivo antes de atualizar o estado
+                                if (!isNaN(quantidade) && quantidade > 0) {
+                                    setQuantidade(quantidade);
+                                } else {
+                                    e.target.value = ''; // Limpa o campo se o valor não for válido
+                                }
+                            }}
+                            onKeyDown={(e) => {
+                                // Impedir a entrada de caracteres que criam números negativos
+                                if (e.key === '-' || e.key === 'e' || e.key === '.') {
+                                    e.preventDefault();
+                                }
+                            }}
                         />
                     </div>
                     <div>
